@@ -49,8 +49,8 @@ runs:
         cd tmp-repo
         rm -rf .git
         git init -b main
-        git add .
-        git commit -m "First commit"
+        git config user.name "GitHub Actions Bot"
+        git config user.email "<actions@github.com>"
         git remote add origin ${{ inputs.target-repository-name }}
         git push --mirror origin main
       shell: bash
