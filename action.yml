@@ -46,6 +46,7 @@ runs:
     - run: |
         cd temp-repo
         git init -b main
+        git config user.name "GitHub Actions Bot" && git config user.email "<>"
         git add .
         git commit -m "First commit"
         git remote add origin ${{ inputs.target-repository-name }}
