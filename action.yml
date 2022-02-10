@@ -1,1 +1,43 @@
-init content
+name: 'Backup repository'
+description: >
+    Create a repository backup
+
+inputs:
+  token:
+    description: >
+        Personal access token (PAT) used to fetch the repository. Default: empty. This field is optional, required if app credentials are not defined.
+    required: true
+  source-repository:
+    description: >
+        Source repository.
+    required: true
+  owner:
+    description: >
+        Target repository owner
+    required: true
+  target-repository-name:
+    description: >
+        Target repository name.
+    required: true
+  topics:
+    description: >
+        Topics to add on destination repository
+    default: ["backup"]
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v2
+    - name: Clone repository
+      with:
+        repository: ${{ inputs.repository }}
+        fetch-depth: 0
+    - run: |
+        curl -X POST -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/orgs/${{ inputs.owner }}/repos -d '{"name":"${{ inputs.repository }}", "topic":"Salsa mostaza"}'
+      shell: bash
+    - run: |
+        export TOPICS=${{ inputs.topics }}
+
+        curl -X PUT -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${{ inputs.owner }}/${{ inputs.repository }}/topics -d '{"names":$TOPICS}'
+    - run: |
+        ls -la

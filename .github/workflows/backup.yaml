@@ -1,0 +1,19 @@
+name: Repository backup
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  backup-repository:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Backup repository
+        uses: ./
+        with:
+          token:
+          source-repository: the-iron-bank-of-braavos/test-octokit
+          owner: the-iron-bank-of-braavos
+          target-repository-name: test-octokit-backup
+          topics: ["a","lot","of","topics"]
