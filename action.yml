@@ -40,7 +40,7 @@ runs:
     - run: |
         export TOPICS=${{ inputs.topics }}
 
-        curl -X PUT -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${{ inputs.owner }}/${{ inputs.target-repository-name }}/topics -d '{"names":[${{ inputs.topics }}]}'
+        curl -X PUT -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${{ inputs.owner }}/${{ inputs.target-repository-name }}/topics -d '{"names":"${{ inputs.topics }}"}'
       shell: bash
     - run: |
         ls -la
