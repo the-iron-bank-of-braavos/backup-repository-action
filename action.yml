@@ -23,14 +23,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: |
-        IFS='/'
-        read -a repo <<< "${{ inputs.target-repository }}"
-        export OWNER=${repo[0]}
-        export REPO=${repo[1]}
-        echo "Owner: $OWNER"
-        echo "Repo: $REPO"
-      shell: bash
     - name: Clone repository
       uses: actions/checkout@v2
     - run: |
