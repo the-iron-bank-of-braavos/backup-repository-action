@@ -43,3 +43,12 @@ runs:
     - run: |
         ls -la
       shell: bash
+    - run: |
+        cd temp-repo
+        git init -b main
+        git add .
+        git commit -m "First commit"
+        git remote add origin ${{ inputs.target-repository-name }}
+        git remote -v
+        git push origin main
+      shell: bash
