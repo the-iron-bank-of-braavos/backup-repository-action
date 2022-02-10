@@ -30,6 +30,7 @@ runs:
     - name: Clone repository
       uses: actions/checkout@v2
       with:
+        token: ${{ inputs.token }}
         repository: ${{ inputs.source-repository }}
         ref: main
         path: temp-repo
