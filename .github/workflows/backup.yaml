@@ -16,4 +16,4 @@ jobs:
           source-repository: the-iron-bank-of-braavos/test-octokit
           owner: the-iron-bank-of-braavos
           target-repository-name: test-octokit-backup
-          topics: ["a","lot","of","topics"]
+          topics: "my-backup"
