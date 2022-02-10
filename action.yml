@@ -31,12 +31,16 @@ runs:
     - run: |
         IFS='/'
         read -a repo <<< "${{ inputs.target-repository }}"
-        #curl -X POST -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/orgs/${repo[0]}/repos -d '{"name":${repo[1]}}'
+        OWNER=${repo[0]}
+        REPO=${repo[1]}
+        #curl -X POST -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/orgs/$OWNER/repos -d '{"name": $REPO}'
       shell: bash
     - run: |
         IFS='/'
         read -a repo <<< "${{ inputs.target-repository }}"
-        curl -X PUT -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${repo[0]}/${repo[1]}/topics -d '{"names":"${{ inputs.topics }}"}'
+        OWNER=${repo[0]}
+        REPO=${repo[1]}
+        curl -X PUT -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/$OWNER/$REPO/topics -d '{"names":"${{ inputs.topics }}"}'
       shell: bash
     - run: |
         IFS='/'
