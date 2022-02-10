@@ -27,7 +27,6 @@ runs:
         IFS='/'
         read -a repo <<< "${{ inputs.target-repository }}"
         echo "OWNER=$(echo ${repo[0]})" >> ${GITHUB_ENV}
-        echo "REPO=$(echo ${repo[1]})" >> ${GITHUB_ENV}
       shell: bash
     - name: Clone repository
       uses: actions/checkout@v2
