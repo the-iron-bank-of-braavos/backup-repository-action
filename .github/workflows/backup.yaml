@@ -9,6 +9,7 @@ jobs:
   backup-repository:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Backup repository
         uses: ./
         with:
