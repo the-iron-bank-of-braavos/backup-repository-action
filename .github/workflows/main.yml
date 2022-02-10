@@ -1,1 +1,61 @@
 on:
+  workflow_call:
+    inputs:
+      origin-repo:
+        description: 'Repository where action to be cloned is located'
+        required: true
+        type: string
+      commit-sha:
+        description: 'Commit SHA for retrieve action exact version reference, it will define branch name on new repository'
+        required: true
+        type: string
+      target-repo:
+        description: 'New repository name for action to be stored. Composed by: org-name/repo-name'
+        required: true
+        type: string
+      token:
+        description: 'Token to perform repository creation'
+        required: true
+        type: string
+      owner:
+        description: 'Organization where repository is going to be created'
+        required: true
+        type: string
+      topics:
+        description: 'Tags for repository management'
+        required: true
+        type: string
+
+jobs:
+  action-clone-validator:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Action clone validator'
+        run: |
+          echo "Check if repository exists"
+          if ! curl -i https://api.github.com/repos/${{ inputs.target-repo }} | grep "404" ; then
+            echo "Check if repository has defined commit"
+            if ! curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${{ inputs.target-repo }}/commits | grep ${{ inputs.commit-sha }}; then
+              echo "Creating new branch on repository"
+              git clone ${{ inputs.origin-repo }} .
+              rm -rf .git
+              git checkout ${{ inputs.commit-sha }}
+              git init -b ${{ inputs.commit-sha }}
+              git config user.name "GitHub Actions Bot" && git config user.email "<>"
+              git add . && git commit -m "${{ inputs.commit-sha }}"
+              git push -u origin ${{ inputs.commit-sha }}
+            else
+              echo "Repository and branch already exists"
+            fi
+          else
+              echo "Creating new repository for cloned action"
+              git clone ${{ inputs.origin-repo }} .
+              git checkout ${{ inputs.commit-sha }}
+              rm -rf .git
+              git init -b ${{ inputs.commit-sha }}
+              git config user.name "GitHub Actions Bot" && git config user.email "<>"
+              git add . && git commit -m "${{ inputs.commit-sha }}"
+              gh repo create ${{ inputs.target-repo }} --private --source=. --remote=upstream
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
