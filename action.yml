@@ -29,11 +29,13 @@ runs:
   steps:
     - name: Clone repository
       uses: actions/checkout@v2
-      with:
-        token: ${{ inputs.token }}
-        repository: ${{ inputs.source-repository }}
-        ref: main
-        path: temp-repo
+      #with:
+      #  token: ${{ inputs.token }}
+      #  repository: ${{ inputs.source-repository }}
+      #  ref: main
+      #  path: temp-repo
+    - run: |
+        git clone --mirror ${{ inputs.source-repository }}@${{ inputs.source-repository }} tmp-repo
     - run: |
         curl -X POST -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/orgs/${{ inputs.owner }}/repos -d '{"name":"${{ inputs.target-repository-name }}"}'
       shell: bash
@@ -44,11 +46,11 @@ runs:
         ls -la
       shell: bash
     - run: |
-        cd temp-repo
+        cd tmp-repo
+        rm -rf .git
         git init -b main
         git add .
         git commit -m "First commit"
         git remote add origin ${{ inputs.target-repository-name }}
-        git remote -v
-        git push origin main
+        git push --mirror origin main
       shell: bash
