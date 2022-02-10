@@ -27,8 +27,8 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v2
     - name: Clone repository
+      uses: actions/checkout@v2
       with:
         repository: ${{ inputs.repository }}
         fetch-depth: 0
