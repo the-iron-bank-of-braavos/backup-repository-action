@@ -45,7 +45,7 @@ runs:
       shell: bash
     - run: |
         cd temp-repo
-        git init -b main
+        touch README.md
         git config user.name "GitHub Actions Bot" && git config user.email "<>"
         git add .
         git commit -m "First commit"
