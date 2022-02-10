@@ -34,10 +34,10 @@ runs:
         curl -X POST -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/orgs/${repo[0]}/repos" -d '{"name": "'"${repo[1]}"'"}'
       shell: bash
     - run: |
-        t=$( echo "${{ inputs.topics }}" | tr -d ' ')
-        if [ -z "$t" ];
-          t='backup'
-        curl -X PUT -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${{ inputs.target-repository }}/topics -d '{"names": ['"$(printf '"%s"\n' "${t//,/\",\"}")"']}'
+        if [[ ! -n "${{ inputs.topics }}" ]];
+          t=$( echo "${{ inputs.topics }}" | tr -d ' ')
+          curl -X PUT -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${{ inputs.target-repository }}/topics -d '{"names": ['"$(printf '"%s"\n' "${t//,/\",\"}")"']}'
+        fi
       shell: bash
     - run: |
         cd tmp-repo
