@@ -16,4 +16,4 @@ jobs:
           token: ${{ secrets.USER_PAT }}
           source-repository: the-iron-bank-of-braavos/test-octokit
           target-repository: the-iron-bank-of-braavos/test-octokit-backup
-          topics: 'falete'
+          topics: ''
