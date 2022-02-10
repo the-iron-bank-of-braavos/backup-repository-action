@@ -38,11 +38,10 @@ runs:
         read -a topics <<< "${{ inputs.topics }}"
         TOPICS=''
         for i in "${topics[@]}"
-        do:
+        do
             TOPICS+='"'$i'",'
         done
-        echo $TOPICS
-        exit 0
+        echo "TOPICSC: $TOPICS"
         curl -X PUT -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${{ inputs.target-repository }}/topics -d '{"names": ${{ inputs.topics }}}'
       shell: bash
     - run: |
