@@ -53,5 +53,5 @@ runs:
         git config user.name "GitHub Actions Bot"
         git config user.email "<actions@github.com>"
         git remote add origin https://${{ inputs.token }}@github.com/${{ inputs.owner }}/${{ inputs.target-repository-name }}.git
-        git push --mirror
+        git push remote --mirror
       shell: bash
