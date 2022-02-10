@@ -35,8 +35,8 @@ runs:
         export REPO=${repo[1]}
         echo "Owner: $OWNER"
         echo "Repo: $REPO"
-        echo "OWNER=$(echo ${repo[0]})" >> $GITHUB_ENV
-        echo "REPO=$(echo ${repo[1]})" >> $GITHUB_ENV
+        echo "OWNER=$(echo ${repo[0]})" >>> $GITHUB_ENV
+        echo "REPO=$(echo ${repo[1]})" >>> $GITHUB_ENV
         curl -X POST -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/orgs/${{ env.OWNER }}/repos -d '{"name": ${{ env.REPO }}}'
       shell: bash
     - run: |
