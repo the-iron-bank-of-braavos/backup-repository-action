@@ -11,11 +11,7 @@ inputs:
     description: >
         Source repository.
     required: true
-  owner:
-    description: >
-        Target repository owner
-    required: true
-  target-repository-name:
+  target-repository:
     description: >
         Target repository name.
     required: true
@@ -33,17 +29,22 @@ runs:
         git clone --mirror https://${{ inputs.token }}@github.com/${{ inputs.source-repository }}.git tmp-repo
       shell: bash
     - run: |
-        curl -X POST -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/orgs/${{ inputs.owner }}/repos -d '{"name":"${{ inputs.target-repository-name }}"}'
+        IFS='/'
+        read -a repo <<< "${{ inputs.target-repository }}"
+        curl -X POST -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/orgs/${repo[0]}/repos -d '{"name":"${repo[1]}"}'
       shell: bash
     - run: |
-        curl -X PUT -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${{ inputs.owner }}/${{ inputs.target-repository-name }}/topics -d '{"names":["${{ inputs.topics }}"]}'
+        IFS='/'
+        read -a repo <<< "${{ inputs.target-repository }}"
+        curl -X PUT -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${repo[0]}/${repo[1]}/topics -d '{"names":["${{ inputs.topics }}"]}'
       shell: bash
     - run: |
-        ls -la
+        echo "Owner: ${repo[0]}"
+        echo "Repo: ${repo[1]}"
       shell: bash
     - run: |
         cd tmp-repo
         git config user.name "GitHub Actions Bot"
         git config user.email "<actions@github.com>"
-        git push --force --mirror https://${{ inputs.token }}@github.com/${{ inputs.owner }}/${{ inputs.target-repository-name }}.git
+        git push --force --mirror https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
       shell: bash

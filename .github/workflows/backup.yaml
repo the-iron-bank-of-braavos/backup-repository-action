@@ -15,6 +15,5 @@ jobs:
         with:
           token: ${{ secrets.USER_PAT }}
           source-repository: the-iron-bank-of-braavos/test-octokit
-          owner: the-iron-bank-of-braavos
-          target-repository-name: test-octokit-backup
+          target-repository: the-iron-bank-of-braavos/test-octokit-backup
           topics: "my-backup"
