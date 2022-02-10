@@ -35,7 +35,7 @@ runs:
       #  ref: main
       #  path: temp-repo
     - run: |
-        git clone --mirror ${{ inputs.source-repository }} tmp-repo
+        git clone --mirror git@github.com:${{ inputs.source-repository }}.git tmp-repo
       shell: bash
     - run: |
         curl -X POST -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/orgs/${{ inputs.owner }}/repos -d '{"name":"${{ inputs.target-repository-name }}"}'
