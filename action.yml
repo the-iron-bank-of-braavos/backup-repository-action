@@ -31,7 +31,6 @@ runs:
       uses: actions/checkout@v2
       with:
         repository: ${{ inputs.source-repository }}
-        fetch-depth: 0
         path: temp-repo
     - run: |
         curl -X POST -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/orgs/${{ inputs.owner }}/repos -d '{"name":"${{ inputs.target-repository-name }}"}'
