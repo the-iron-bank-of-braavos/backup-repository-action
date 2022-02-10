@@ -38,7 +38,7 @@ runs:
         #read -a topics <<< "${{ inputs.topics }}"
         #t=$(IFS=","; printf "%s" "${topics[*]}")
         #echo "TOPICS: $t"
-        TOPICS=printf '"%s"\n' "${${{ inputs.topics }}//,/\",\"}"
+        TOPICS=printf "%s" "${${{ inputs.topics }}//,/\",\"}"
         curl -X PUT -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${{ inputs.target-repository }}/topics -d '{"names": [$TOPICS]}'
       shell: bash
     - run: |
