@@ -41,5 +41,5 @@ This action has to be used in this way.
 
 ## Credits and references
 
-https://github.com/ivanamat
-https://github.com/DanielSD89
+[ivanamat](https://github.com/ivanamat)\
+[DanielSD89](https://github.com/DanielSD89)
