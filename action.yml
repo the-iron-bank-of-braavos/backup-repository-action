@@ -43,8 +43,9 @@ runs:
         cd tmp-repo
         git config user.name "GitHub Actions Bot"
         git config user.email "<actions@github.com>"
-        #git push --force --mirror https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
-        git remote add backup https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
-        git push backup --all
-        git push backup --tags
+        git config receive.denyNonFastForwards=true
+        git push --mirror https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
+        #git remote add backup https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
+        #git push backup --all
+        #git push backup --tags
       shell: bash
