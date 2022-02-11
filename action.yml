@@ -43,5 +43,5 @@ runs:
         cd tmp-repo
         git config user.name "GitHub Actions Bot"
         git config user.email "<actions@github.com>"
-        git push --force --mirror https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
+        git push --no-force --mirror https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
       shell: bash
