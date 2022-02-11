@@ -44,8 +44,8 @@ runs:
         git config user.name "GitHub Actions Bot"
         git config user.email "<actions@github.com>"
         #git push --force --mirror https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
-        git remote add origin https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
-        git push origin --all  # push all branches
-        git push origin --tags # push all tags
-        git push origin refs/remotes/* #push the remote refs
+        git remote add backup https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
+        git push backup --all  # push all branches
+        git push backup --tags # push all tags
+        git push backup refs/remotes/* #push the remote refs
       shell: bash
