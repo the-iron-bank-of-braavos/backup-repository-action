@@ -6,7 +6,7 @@ inputs:
   token:
     description: >
         Personal access token (PAT) used to fetch the repository. Default: empty. This field is optional, required if app credentials are not defined.
-    required: true
+    default: ${{ github.token }}
   source-repository:
     description: >
         Source repository.
@@ -22,7 +22,7 @@ inputs:
   topics:
     description: >
         Topics to add on destination repository
-    default: 'backup'
+    default: ''
 
 runs:
   using: "composite"
