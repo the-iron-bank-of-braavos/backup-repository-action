@@ -33,6 +33,7 @@ runs:
         repository: ${{ inputs.source-repository }}
         ref: ${{ inputs.ref }}
         token: ${{ inputs.token }}
+        path: tmp-repo
     - run: |
         IFS='/'
         read -a repo <<< "${{ inputs.target-repository }}"
@@ -45,6 +46,7 @@ runs:
         fi
       shell: bash
     - run: |
+        cd tmp-repo/
         rm -rf .git
         git init
         git config user.name "GitHub Actions Bot"
