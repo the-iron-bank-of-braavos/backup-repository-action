@@ -40,7 +40,7 @@ runs:
         HTTPD_CODE=$(curl -X POST -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/orgs/${repo[0]}/repos" -d '{"name": "'"${repo[1]}"'"}')
         echo "HTTPD_CODE: $HTTPD_CODE"
 
-        if [ $HTTPD_CODE == "200" ]; then
+        if [ $HTTPD_CODE === 200 ]; then
             mkdir -p tmp-readme
             if test -f "tmp-repo/README.md"; then
                 cp tmp-repo/README.md tmp-readme/
