@@ -5,7 +5,7 @@ description: >
 inputs:
   token:
     description: >
-        Personal access token (PAT) used to fetch the repository. Default: empty. This field is optional, required if app credentials are not defined.
+      Personal access token (PAT) used to fetch the repository. Default: empty. This field is optional, required if app credentials are not defined.
     default: ${{ github.token }}
   source-repository:
     description: >
