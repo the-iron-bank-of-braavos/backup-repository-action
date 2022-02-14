@@ -39,8 +39,11 @@ runs:
         read -a repo <<< "${{ inputs.target-repository }}"
         curl -X POST -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/orgs/${repo[0]}/repos" -d '{"name": "'"${repo[1]}"'"}'
         mkdir -p tmp-readme
-        ls -l tmp-repo/
-        cp tmp-repo/README.md tmp-readme/
+        if test -f "tmp-repo/README.md"; then
+            cp tmp-repo/README.md tmp-readme/
+        else
+            echo "${{ inputs.source-repository }} ( BACKUP )" > tmp-readme/README.md
+        fi
         cd tmp-readme
         git init
         git config user.name "GitHub Actions Bot"
