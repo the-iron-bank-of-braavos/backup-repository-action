@@ -31,6 +31,7 @@ runs:
       uses: actions/checkout@v2
       with:
         repository: ${{ inputs.source-repository }}
+        ref: ${{ inputs.ref }}
         token: ${{ inputs.token }}
     - run: |
         IFS='/'
@@ -46,8 +47,10 @@ runs:
     - run: |
         git config user.name "GitHub Actions Bot"
         git config user.email "<actions@github.com>"
-        git remote set-url --push origin https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
+        git remote remove origin
+        git remote add origin https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
         git checkout ${{ inputs.ref }}
-        git checkout -b sha-${{ inputs.ref }}
-        git push origin sha-${{ inputs.ref }}
+        git checkout -b --orphan sha-${{ inputs.ref }}
+        git commit -am "sha-${{ inputs.ref }}"
+        git push backup sha-${{ inputs.ref }}
       shell: bash
