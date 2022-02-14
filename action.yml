@@ -67,5 +67,7 @@ runs:
         git init
         git remote add origin https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
         git checkout -b sha-${{ inputs.ref }}
+        git add -A
+        git commit -am "SHA: ${{ inputs.ref }}"
         git push -u origin sha-${{ inputs.ref }}
       shell: bash
