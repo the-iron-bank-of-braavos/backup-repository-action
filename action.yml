@@ -73,8 +73,9 @@ runs:
         git remote add origin https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
         git branch -M main
         git fetch --all
-        git branch --list sha-${{ inputs.ref }}
-        if [ `git branch --list sha-${{ inputs.ref }}` ]; then
+        export REF=$(git branch --list sha-${{ inputs.ref }})
+        echo "MY REF: $REF"
+        if [ $REF ]; then
             echo "Branch name sha-${{ inputs.ref }} already exists."
             exit 1
         fi
