@@ -50,7 +50,7 @@ runs:
         git remote remove origin
         git remote add origin https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
         git checkout ${{ inputs.ref }}
-        git checkout -b --orphan sha-${{ inputs.ref }}
-        git commit -am "sha-${{ inputs.ref }}"
-        git push backup sha-${{ inputs.ref }}
+        git checkout -b --orphan ${{ inputs.ref }}
+        git commit -am "${{ inputs.ref }}"
+        git push origin ${{ inputs.ref }}
       shell: bash
