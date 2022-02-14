@@ -13,6 +13,7 @@ jobs:
       - name: Backup repository
         uses: ./
         with:
+          token: ${{ secrets.USER_PAT }}
           source-repository: the-iron-bank-of-braavos/test-octokit
           target-repository: the-iron-bank-of-braavos/test-octokit-backup
           topics: 'backup, test, sha'
