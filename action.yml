@@ -51,7 +51,7 @@ runs:
         git remote add origin https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
         git add README.md
         git commit -am "Copy README.md"
-        git push --force origin main
+        git push origin refs/remotes/origin/main
       shell: bash
     - run: |
         t=$( echo "${{ inputs.topics }}" | tr -d ' ')
