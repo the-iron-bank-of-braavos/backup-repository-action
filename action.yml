@@ -76,8 +76,8 @@ runs:
         export REF=${{ inputs.ref }}
         export REF="sha-$REF"
         echo "GIR BRANCH LIST:"
-        git branch --help
-        git branch --list
+        git branch -a --list $REF
+        git branch -a --list
         echo "MY REF: $REF"
         if [ $REF ]; then
             echo "Branch name sha-${{ inputs.ref }} already exists."
