@@ -52,5 +52,5 @@ runs:
         git checkout -b sha-${{ inputs.ref }}
         git add -A
         git commit -am "sha: ${{ inputs.ref }}"
-        git push backup main
+        git push backup sha-${{ inputs.ref }}
       shell: bash
