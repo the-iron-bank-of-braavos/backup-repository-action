@@ -48,7 +48,8 @@ runs:
         git init
         git config user.name "GitHub Actions Bot"
         git config user.email "<actions@github.com>"
-        #git remote add origin https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
+        git remote add origin https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
+        git add README.md
         git commit -am "Copy README.md"
         git push -u origin main
       shell: bash
