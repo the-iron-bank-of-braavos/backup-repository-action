@@ -54,19 +54,5 @@ runs:
         git add -A
         git commit -am "SHA: ${{ inputs.ref }}"
         git push -u origin sha-${{ inputs.ref }}
-
-        #git remote remove origin
-        #git remote add origin https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
-        #git checkout ${{ inputs.ref }}
-        #git checkout --orphan ${{ inputs.ref }}
-        #git commit -am "sha: ${{ inputs.ref }}"
-        #git push origin main
-
-        #git remote remove origin
-        #git checkout ${{ inputs.ref }}
-        #git checkout --orphan temp_branch
-        #git commit -m "SHA: ${{ inputs.ref }}"
-        #git rebase --onto temp_branch ${{ inputs.ref }} main
-        #git remote add origin https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
-        #git push -u origin main
+        exit 0
       shell: bash
