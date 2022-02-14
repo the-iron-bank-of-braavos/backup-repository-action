@@ -74,11 +74,10 @@ runs:
         git branch -M main
         git fetch --all
         REF="sha-${{ inputs.ref }}"
-        if [[ $(git branch --list $REF) ]]; then
+        if [[ "$(git branch --list $REF)" === "" ]]; then
             echo "Branch name sha-${{ inputs.ref }} already exists."
             exit 1
         fi
-        echo "SE HA SALTADO EL IF!!!!!!! ( $REF )"
         git checkout -b sha-${{ inputs.ref }}
         git add -A
         git commit -am "SHA: ${{ inputs.ref }}"
