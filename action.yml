@@ -31,6 +31,7 @@ runs:
       uses: actions/checkout@v2
       with:
         repository: ${{ inputs.source-repository }}
+        ref: ${{ inputs.ref }}
         token: ${{ inputs.token }}
     - run: |
         IFS='/'
@@ -61,9 +62,10 @@ runs:
         #git remote add origin https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
         #git push -u origin main
 
-        git remote remove origin
-        git checkout ${{ inputs.ref }}
-        git checkout -b sha-${{ inputs.ref }}
+
+        rm -rf .git
+        git init
         git remote add origin https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
+        git checkout -b sha-${{ inputs.ref }}
         git push -u origin sha-${{ inputs.ref }}
       shell: bash
