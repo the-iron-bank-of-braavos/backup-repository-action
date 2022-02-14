@@ -49,9 +49,10 @@ runs:
         git config user.name "GitHub Actions Bot"
         git config user.email "<actions@github.com>"
         git remote add origin https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
+        git fetch --all
         git add README.md
         git commit -am "Copy README.md"
-        git push origin refs/remotes/origin/main
+        git push -u origin main
       shell: bash
     - run: |
         t=$( echo "${{ inputs.topics }}" | tr -d ' ')
