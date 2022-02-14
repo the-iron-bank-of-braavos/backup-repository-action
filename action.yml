@@ -49,6 +49,8 @@ runs:
         git config user.email "<actions@github.com>"
         git remote add backup https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
         git checkout ${{ inputs.ref }}
-        git checkout -c main
-        git push backup main
+        git checkout -b sha-${{ inputs.ref }}
+        git add -A
+        git commit -am "sha: ${{ inputs.ref }}"
+        git push backup sha-${{ inputs.ref }}
       shell: bash
