@@ -39,6 +39,7 @@ runs:
         read -a repo <<< "${{ inputs.target-repository }}"
         curl -X POST -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/orgs/${repo[0]}/repos" -d '{"name": "'"${repo[1]}"'"}'
         mkdir -p tmp-readme
+        ls -l tmp-repo/
         cp tmp-repo/README.md tmp-readme/
         cd tmp-readme
         git init
