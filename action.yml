@@ -46,7 +46,7 @@ runs:
     - run: |
         git config user.name "GitHub Actions Bot"
         git config user.email "<actions@github.com>"
-        git remote set-url https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
+        git remote set-url --push https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
         git checkout ${{ inputs.ref }}
         git checkout -b sha-${{ inputs.ref }}
         git push origin sha-${{ inputs.ref }}
