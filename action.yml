@@ -15,6 +15,10 @@ inputs:
     description: >
         Target repository name.
     required: true
+  sha:
+    description: >
+        Repository hash to copy.
+    required: true
   topics:
     description: >
         Topics to add on destination repository
@@ -26,7 +30,19 @@ runs:
     - name: Clone repository
       uses: actions/checkout@v2
     - run: |
-        git clone --mirror https://${{ inputs.token }}@github.com/${{ inputs.source-repository }}.git tmp-repo
+        #git clone --mirror https://${{ inputs.token }}@github.com/${{ inputs.source-repository }}.git tmp-repo
+
+        # create and initialize an empty repository
+        git init
+
+        # add a remote named origin for the repository at <repository>
+        git remote add origin https://${{ inputs.token }}@github.com/${{ inputs.source-repository }}.git
+
+        # fetch a commit using its hash
+        git fetch origin ${{ inputs.sha }}
+
+        # reset repository to that commit
+        git reset –hard FETCH_HEAD
       shell: bash
     - run: |
         IFS='/'
@@ -44,7 +60,7 @@ runs:
         git config user.name "GitHub Actions Bot"
         git config user.email "<actions@github.com>"
         git config receive.denyNonFastForwards true
-        git push --mirror https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
+        git push --no-force --mirror https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
         #git remote add backup https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
         #git push backup --all
         #git push backup --tags
