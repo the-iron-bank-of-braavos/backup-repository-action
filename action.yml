@@ -73,7 +73,7 @@ runs:
         git remote add origin https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
         git branch -M main
         git fetch --all
-        if [[ $( git branch --list sha-${{ inputs.ref }} ) ]]; then
+        if [[ $( git branch --list sha-$REF ) ]]; then
             echo "Branch name sha-${{ inputs.ref }} already exists."
             exit 1
         fi
@@ -84,3 +84,5 @@ runs:
         git push -u origin sha-${{ inputs.ref }}
         exit 0
       shell: bash
+      env:
+        REF: ${{ inputs.ref }}
