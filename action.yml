@@ -50,5 +50,5 @@ runs:
         git remote add backup https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
         git branch -a
         git checkout ${{ inputs.ref }}
-        git push backup ${{ inputs.ref }}
+        git push backup main
       shell: bash
