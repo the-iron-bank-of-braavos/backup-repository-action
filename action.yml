@@ -72,7 +72,7 @@ runs:
         git config user.email "<actions@github.com>"
         git remote add origin https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
         git branch -M main
-        git fetch --al
+        git fetch --all
         REF=sha-${{ inputs.ref }}
         git branch --list $REF | grep -q $REF
         if [[ $? -eq 0 ]]; then
