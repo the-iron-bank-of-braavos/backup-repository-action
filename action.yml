@@ -75,7 +75,8 @@ runs:
         git fetch --all
         REF="sha-${{ inputs.ref }}"
         echo "MY REF: $REF"
-        EXISTS=$(git branch --list $REF)
+        git branch --list $REF
+        EXISTS=git branch --list $REF
         echo "SHA BRANCH EXISTS: $EXISTS"
         if [[ $EXISTS ]]; then
             echo "Branch name sha-${{ inputs.ref }} already exists."
