@@ -74,8 +74,7 @@ runs:
         git branch -M main
         git fetch --all
         REF=sha-${{ inputs.ref }}
-        echo $REF
-        if [[ `git branch --list $REF` ]]; then
+        if [[ `git branch --list $REF | grep -q $REF` -eq 0 ]]; then
             echo "Branch name sha-${{ inputs.ref }} already exists."
             exit 1
         fi
