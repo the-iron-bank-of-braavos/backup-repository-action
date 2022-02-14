@@ -74,6 +74,9 @@ runs:
         git branch -M main
         git fetch --all
         git pull --all
+        echo "GIT SHOW BRANCH:"
+        git show-branch
+        echo "ENDO SHOW"
         export REF=${{ inputs.ref }}
         export REF="sha-$REF"
         echo "GIR BRANCH LIST:"
