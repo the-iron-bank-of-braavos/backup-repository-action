@@ -45,10 +45,10 @@ runs:
         fi
       shell: bash
     - run: |
-        git config user.name "GitHub Actions Bot"
-        git config user.email "<actions@github.com>"
         rm -rf .git
         git init
+        git config user.name "GitHub Actions Bot"
+        git config user.email "<actions@github.com>"
         git remote add origin https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
         git checkout -b sha-${{ inputs.ref }}
         git add -A
