@@ -73,10 +73,10 @@ runs:
         git remote add origin https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
         git branch -M main
         git fetch --all
-        git pull --all
         echo "GIT SHOW BRANCH:"
         git show-branch
-        echo "ENDO SHOW"
+        echo "END SHOW"
+        exit 0
         export REF=${{ inputs.ref }}
         export REF="sha-$REF"
         echo "GIR BRANCH LIST:"
