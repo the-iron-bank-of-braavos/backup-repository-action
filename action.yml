@@ -74,7 +74,7 @@ runs:
         git branch -M main
         git fetch --all
         echo "GIT SHOW BRANCH:"
-        git show-branch
+        git branch -a
         echo "END SHOW"
         exit 0
         export REF=${{ inputs.ref }}
