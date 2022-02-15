@@ -76,8 +76,8 @@ runs:
         REF=sha-${{ inputs.ref }}
         echo $REF
         echo "Checking git branch command"
-        git branch --list $REF
-        EXISTS=$(git branch --list "$REF")
+        git branch --list sha-${{ inputs.ref }}
+        EXISTS=$(git branch --list sha-${{ inputs.ref }})
         echo $EXISTS
         if [ -z $EXISTS ] ; then
             echo "Branch name sha-${{ inputs.ref }} already exists."
