@@ -1,8 +1,20 @@
 # Backup Repository Action
 
-_Description_: Action which use consists in 
-making a copy of any existing GitHub Action 
-and create a new repository for its internal usage
+_Description_: Action to perform a backup 
+of any existing GitHub Action,
+creating a new repository for internal usage.
+
+After checking that source respository exists
+it will perform a backup based on SHA reference,
+asign selected topics and finally
+create a new repository defined in
+target repository input with a branch named after
+SHA reference.
+
+In case where user tries to make a backup of an already
+existing SHA reference in the same repository
+it will result in a failed execution.
+
 
 ## Table of content
 
@@ -14,14 +26,15 @@ and create a new repository for its internal usage
 
 | Input                    | Required  | Default  | Description                                                                                                             |
 |--------------------------|-----------|----------|-------------------------------------------------------------------------------------------------------------------------|
-| `token`                  | **true**  |          | Personal access token used to fetch the repository. This field is optional, required if app credentials are not defined.|
-| `source-repository`      | **true**  |          | Repository from where action will be retrieved to perform a copy.                                                       |
+| `token`                  | **true**  |          | Personal access token used to manage this action.                                                                       |
+| `source-repository`      | **true**  |          | Repository from where action will be retrieved to perform a backup.                                                     |
+| `ref`                    | **true**  |          | Target commit SHA from action exact reference.                                                                          |
 | `target-repository-name` | **true**  |          | New repository for upload copied source repository.                                                                     |
-| `topics`                 | **false** | `backup` | Tags for repository management.                                                                                         |
+| `topics`                 | **false** | `backup` | Topics for repository management.                                                                                         |
 
 ## Usage
 
-This action has to be used in this way.
+Action has to be used in this way.
 
 ```yaml
    backup-repository:
@@ -33,6 +46,7 @@ This action has to be used in this way.
          with:
            token: <token>
            source-repository: <source-repository>
+           ref: <ref>
            target-repository-name: <target-repository-name>
            topics: <topics>
 ```          
