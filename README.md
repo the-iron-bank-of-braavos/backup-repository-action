@@ -14,13 +14,13 @@ In case of the user tries to make a backup of an already existing SHA reference 
 
 ## Inputs
 
-| Input                    | Required  | Default  | Description                                                                                                             |
-|--------------------------|-----------|----------|-------------------------------------------------------------------------------------------------------------------------|
-| `token`                  | **true**  |          | Personal access token used to manage this action.                                                                       |
-| `source-repository`      | **true**  |          | Repository from where action will be retrieved to perform a backup.                                                     |
-| `ref`                    | **true**  |          | Target commit SHA from action exact reference.                                                                          |
-| `target-repository-name` | **true**  |          | New repository for upload copied source repository.                                                                     |
-| `topics`                 | **false** | `backup` | Topics for repository management.                                                                                         |
+| Input                    | Required  | Default              | Description                                                                                                           |
+|--------------------------|-----------|----------------------|-----------------------------------------------------------------------------------------------------------------------|
+| `token`                  | **false** | `${{ github.token }}`| Personal access token used to manage this action. This field is optional, required if app credentials are not defined.|
+| `source-repository`      | **true**  |                      | Repository from where action will be retrieved to perform a backup.                                                          |
+| `ref`                    | **true**  |                      | Target commit SHA from action exact reference.                                                                               |
+| `target-repository-name` | **true**  |                      | New repository for upload copied source repository.                                                                          |
+| `topics`                 | **false** | `backup`             | Topics for repository management.                                                                                     |
 
 ## Usage
 
