@@ -75,7 +75,7 @@ runs:
         git fetch --all
         BRANCH="sha-${{ inputs.ref }}"
         echo "BRANCH: $BRANCH"
-        if [[ $(git branch -r --contains "$BRANCH" 2>/dev/null) ]]; then
+        if [[ $(git branch -r --contains "origin/$BRANCH" 2>/dev/null) ]]; then
             echo "Branch name $BRANCH already exists!"
             exit 1
         else
