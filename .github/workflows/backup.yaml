@@ -3,7 +3,7 @@ name: Repository backup
 on:
   push:
     branches:
-      - 'main'
+      - 'test-if'
 
 jobs:
   backup-repository:
