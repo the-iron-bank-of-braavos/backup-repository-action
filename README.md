@@ -25,7 +25,7 @@ input modificaction.
 
 Actions can be retrieved, searched and viewed
 from official 
-[GitHub Official Marketplace](https://github.com/marketplace?type=actions)
+[GitHub Marketplace](https://github.com/marketplace?type=actions)
 and then, from direct link to its GitHub repository web,
 we can obtain URL and SHA reference,
 which it can be obtained from commit field on
