@@ -72,7 +72,7 @@ runs:
         git config user.email "<actions@github.com>"
         git remote add origin https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
         git branch -M main
-        git fetch --all
+        #git fetch --all
         git config --global alias.clone-branches '! git branch -a | sed -n "/\/HEAD /d; /\/master$/d; /remotes/p;" | xargs -L1 git checkout -t'
         git clone-branches
         if [ git branch -a --list sha-${{ inputs.ref }} | grep -v 'remotes' ] ; then
