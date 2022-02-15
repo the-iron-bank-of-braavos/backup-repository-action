@@ -47,7 +47,7 @@ runs:
                 cp tmp-repo/README.md tmp-readme/
             else
                 echo "# ${{ inputs.source-repository }} ( BACKUP )" >> tmp-readme/README.md
-                echo "this repository is a backup of the ${{ inputs.source-repository }} repository." > tmp-readme/README.md
+                echo "this repository is a backup of the ${{ inputs.source-repository }} repository." >> tmp-readme/README.md
             fi
             cd tmp-readme
             git init
