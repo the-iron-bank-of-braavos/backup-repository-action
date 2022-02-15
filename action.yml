@@ -78,8 +78,6 @@ runs:
         if [[ $(git branch -r --contains "origin/$BRANCH" 2>/dev/null) ]]; then
             echo "Branch name $BRANCH already exists!"
             exit 1
-        else
-            echo "Branch name $BRANCH doesn't exists!"
         fi
         git checkout -b $BRANCH
         git add -A
