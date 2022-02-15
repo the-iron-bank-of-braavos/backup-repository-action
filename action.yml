@@ -76,7 +76,7 @@ runs:
         for branch in `git branch -a | grep remotes | grep -v HEAD | grep -v master `; do
           git branch --track ${branch#remotes/origin/} $branch
         done
-        if [ git branch --list sha-${{ inputs.ref }} | grep -v 'remotes' ] ; then
+        if [ `git branch --list sha-${{ inputs.ref }} | grep -v 'remotes'` ] ; then
             echo "Branch name sha-${{ inputs.ref }} already exists."
             exit 1
         fi
