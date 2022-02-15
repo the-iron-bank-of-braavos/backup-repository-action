@@ -85,5 +85,3 @@ runs:
         git push -u origin $BRANCH
         exit 0
       shell: bash
-      env:
-        REF: ${{ inputs.ref }}
