@@ -1,35 +1,10 @@
 # Backup Repository Action
 
-_Description_: Action to perform a backup 
-of any existing GitHub Action,
-creating a new repository for internal usage.
-This is in order for preventing that an action
-outside from current organization could be
-erased or be out of reach for any reason.
+Description: Action to perform a backup of any existing GitHub repository, creating a new repository for internal usage. In order to prevent that the action outside of the current organization could be erased or be out of reach for any reason.
 
-After checking that source respository exists
-it will perform a backup based on SHA reference,
-a copy of existing README or add a new one in case
-where source repository doesn't have any README,
-asign selected topics and finally
-create a new repository defined in
-target repository input with a branch named after
-SHA reference.
+After checking that the source repository exists it will perform a backup based on SHA reference, a copy of existing README, or add a new one in case of the repository hasn't any README, assign selected topics, and finally create a new repository defined in target repository input with a branch named after SHA reference.
 
-In case where user tries to make a backup of an already
-existing SHA reference in the same repository
-it will result in a failed execution.
-If is mandatory to replicate any SHA reference it can be
-stored in a new backup repository with target repository 
-input modificaction.
-
-Actions can be retrieved, searched and viewed
-from official 
-[GitHub Marketplace](https://github.com/marketplace?type=actions)
-and then, from direct link to its GitHub repository web,
-we can obtain URL and SHA reference,
-which it can be obtained from commit field on
-top right right corner of files viewer.
+In case of the user tries to make a backup of an already existing SHA reference in the same repository it will result in a failed execution.
 
 ## Table of content
 
