@@ -84,7 +84,6 @@ runs:
         else
             echo "Branch name $BRANCH doesn't exists!"
         fi
-        exit 0
         git checkout -b $BRANCH
         git add -A
         git commit -am "SHA: ${{ inputs.ref }}"
