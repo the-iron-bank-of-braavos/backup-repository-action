@@ -22,7 +22,7 @@ inputs:
   topics:
     description: >
         Topics to add on destination repository
-    default: ''
+    default: 'backup'
 
 runs:
   using: "composite"
