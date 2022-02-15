@@ -41,7 +41,7 @@ runs:
 
         echo "HTTPD_CODE: $HTTPD_CODE"
 
-        if [ $HTTPD_CODE === 200 ]; then
+        if [ $HTTPD_CODE === 200 || $HTTPD_CODE === 201 ]; then
             mkdir -p tmp-readme
             if test -f "tmp-repo/README.md"; then
                 cp tmp-repo/README.md tmp-readme/

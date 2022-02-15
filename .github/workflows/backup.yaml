@@ -15,6 +15,6 @@ jobs:
         with:
           token: ${{ secrets.USER_PAT }}
           source-repository: the-iron-bank-of-braavos/test-octokit
-          target-repository: the-iron-bank-of-braavos/test-octokit-backup-3
+          target-repository: the-iron-bank-of-braavos/test-octokit-backup-new
           topics: 'backup, test, sha'
           ref: 300080b7d0d231307a6c8c037ddbca3694b74cb2
