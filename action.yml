@@ -77,7 +77,7 @@ runs:
         echo $REF
         EXISTS=$(git branch --list sha-${{ inputs.ref }})
         echo $EXISTS
-        if [[ git branch --list sha-${{ inputs.ref }} ]] ; then
+        if [ `git branch --list sha-${{ inputs.ref }}` ] ; then
             echo "Branch name sha-${{ inputs.ref }} already exists."
             exit 1
         fi
