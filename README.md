@@ -29,7 +29,7 @@ from official
 and then, from direct link to its GitHub repository web,
 we can obtain URL and SHA reference,
 which it can be obtained from commit field on
-top right right corner of files viewer.
+top right corner of files viewer.
 
 ## Table of content
 
