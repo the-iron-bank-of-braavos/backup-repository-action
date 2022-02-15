@@ -76,7 +76,6 @@ runs:
         echo "Checking if branch already exists"
         REF=sha-${{ inputs.ref }}
         echo $REF
-        git rev-parse --verify $REF
         if git rev-parse -q --heads $REF ; then
             echo "Branch name sha-${{ inputs.ref }} already exists."
             exit 1
