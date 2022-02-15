@@ -28,8 +28,8 @@ it will result in a failed execution.
 |--------------------------|-----------|----------|-------------------------------------------------------------------------------------------------------------------------|
 | `token`                  | **true**  |          | Personal access token used to manage this action.                                                                       |
 | `source-repository`      | **true**  |          | Repository from where action will be retrieved to perform a backup.                                                     |
-| `target-repository-name` | **true**  |          | New repository for upload copied source repository.                                                                     |
 | `ref`                    | **true**  |          | Target commit SHA from action exact reference.                                                                          |
+| `target-repository-name` | **true**  |          | New repository for upload copied source repository.                                                                     |
 | `topics`                 | **false** | `backup` | Tags for repository management.                                                                                         |
 
 ## Usage
@@ -46,6 +46,7 @@ Action has to be used in this way.
          with:
            token: <token>
            source-repository: <source-repository>
+           ref: <ref>
            target-repository-name: <target-repository-name>
            topics: <topics>
 ```          
