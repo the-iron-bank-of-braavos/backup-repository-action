@@ -17,4 +17,4 @@ jobs:
           source-repository: the-iron-bank-of-braavos/test-octokit
           target-repository: the-iron-bank-of-braavos/test-octokit-backup
           topics: 'backup, test, sha'
-          ref: 1c89fbde610242f4b1d500ef46ab76d149f66cd4
+          ref: 5c8902c432e43de8af29ae6c91eccecd47a89bc6
