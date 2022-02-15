@@ -1,6 +1,6 @@
 # Backup Repository Action
 
-Description: Action to perform a backup of any existing GitHub repository, creating a new repository for internal usage. In order to prevent that the action outside of the current organization could be erased or be out of reach for any reason.
+This is an action to perform a backup of any existing GitHub repository, creating a new repository for internal usage. In order to prevent that the action outside of the current organization could be erased or be out of reach for any reason.
 
 After checking that the source repository exists it will perform a backup based on SHA reference, a copy of existing README, or add a new one in case of the repository hasn't any README, assign selected topics, and finally create a new repository defined in target repository input with a branch named after SHA reference.
 
