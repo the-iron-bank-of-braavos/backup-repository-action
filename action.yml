@@ -76,16 +76,12 @@ runs:
         echo "GIT SHOW BRANCH:"
         git branch -a
         echo "END SHOW"
-        echo $(git branch -a --list sha-ff4b0a5d9ef36ee3c326f1894d87cbeac0bc3713)
-        exit 0
-        export REF=${{ inputs.ref }}
-        export REF="sha-$REF"
+        git branch -a --list sha-{{ inputs.ref }}
         echo "GIR BRANCH LIST:"
-        git branch --list $REF
-        export EXISTS=$(git branch --list $REF)
-        echo "MY REF: $REF"
-        echo "EXISTS: $REF"
-        if [ $REF ]; then
+        git branch --list sha-{{ inputs.ref }}
+        export EXISTS=$(git branch --list sha-{{ inputs.ref }} | grep sha-{{ inputs.ref }})
+        echo "$EXISTS"
+        if [ $? -eq 0 ]; then
             echo "Branch name sha-${{ inputs.ref }} already exists."
             exit 1
         fi
