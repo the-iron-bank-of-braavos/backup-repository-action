@@ -77,7 +77,7 @@ runs:
         REF=sha-${{ inputs.ref }}
         echo $REF
         git rev-parse --verify $REF
-        if [ git rev-parse --verify $REF ]; then
+        if [ git rev-parse refs/heads/$REF ]; then
             echo "Branch name sha-${{ inputs.ref }} already exists."
             exit 1
         fi
