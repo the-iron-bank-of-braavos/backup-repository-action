@@ -37,7 +37,7 @@ runs:
     - run: |
         function createRepo {
                     
-            HTTP_CODE=$(curl -X POST -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/$1/${repo[0]}/repos" -d '{"name": "'"${repo[1]}"'"}')
+            HTTP_CODE=$(curl -X POST -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/${1}/${repo[0]}/repos" -d '{"name": "'"${repo[1]}"'"}')
             echo "HTTP_CODE: $HTTP_CODE"
             
             if [ $HTTP_CODE == 200 ] || [ $HTTP_CODE == 201 ]; then
