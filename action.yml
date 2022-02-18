@@ -73,8 +73,8 @@ runs:
           #createRepo orgs
           echo "IS ORGANIZATION"
         elif [ $IS_USER == 200 ]; then
-          #createRepo users
           echo "IS USER"
+          createRepo users
         else
           echo "No se ha encontrado el usuario ${repo[0]}"
           exit 1
