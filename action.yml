@@ -41,6 +41,7 @@ runs:
             echo "HTTP_CODE: $HTTP_CODE"
             
             if [ $HTTP_CODE == 200 ] || [ $HTTP_CODE == 201 ]; then
+                echo "Creating repo"
                 mkdir -p tmp-readme
                 if test -f "tmp-repo/README.md"; then
                     cp tmp-repo/README.md tmp-readme/
@@ -58,6 +59,7 @@ runs:
                 git add README.md
                 git commit -am "Copy README.md"
                 git push -u origin main
+                echo "Repo created"
             fi
         }
         
