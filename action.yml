@@ -37,6 +37,15 @@ runs:
     - run: |
         function createRepo {
                     
+            if [ $1 == "user" ]; then
+                URL="https://api.github.com/user/repos"
+            elif [ $i == "org" ]
+                URL="https://api.github.com/${1}/${repo[0]}/repos"
+            else
+                echo "Owner parameter must be user or org"
+                exit 1
+            fi
+            
             HTTP_CODE=$(curl -X POST -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/${1}/${repo[0]}/repos" -d '{"name": "'"${repo[1]}"'"}')
             echo "HTTP_CODE: $HTTP_CODE"
             
@@ -71,10 +80,10 @@ runs:
         
         if [ $IS_ORG == 200 ]; then
           echo "IS ORGANIZATION"
-          createRepo orgs
+          createRepo org
         elif [ $IS_USER == 200 ]; then
           echo "IS USER"
-          createRepo users
+          createRepo user
         else
           echo "No se ha encontrado el usuario ${repo[0]}"
           exit 1
