@@ -64,9 +64,8 @@ runs:
         
         if [[ $(curl -X POST -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/orgs/${repo[0]}/repos" -d '{"name": "'"${repo[1]}"'"}') == 200 ]]; then
            createRepo
-        else if [[ $(curl -X POST -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/${repo[0]}/repos" -d '{"name": "'"${repo[1]}"'"}') == 200 ]]; then
+        elif [[ $(curl -X POST -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/${repo[0]}/repos" -d '{"name": "'"${repo[1]}"'"}') == 200 ]]; then
                 createRepo
-             fi
         else
           echo "No se ha encontrado el usuario ${repo[0]}"
         fi
