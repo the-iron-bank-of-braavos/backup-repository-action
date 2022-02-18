@@ -22,7 +22,7 @@ inputs:
   topics:
     description: >
         Topics to add on destination repository
-    default: ''
+    default: 'backup'
 
 runs:
   using: "composite"
@@ -39,12 +39,15 @@ runs:
         read -a repo <<< "${{ inputs.target-repository }}"
         HTTPD_CODE=$(curl -X POST -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/orgs/${repo[0]}/repos" -d '{"name": "'"${repo[1]}"'"}')
 
-        if [ $HTTPD_CODE === 200 ]; then
+        echo "HTTPD_CODE: $HTTPD_CODE"
+         
+        if [ $HTTPD_CODE == 200 ] || [ $HTTPD_CODE == 201 ]; then
             mkdir -p tmp-readme
             if test -f "tmp-repo/README.md"; then
                 cp tmp-repo/README.md tmp-readme/
             else
-                echo "${{ inputs.source-repository }} ( BACKUP )" >> tmp-readme/README.md
+                echo "# ${{ inputs.target-repository }}" >> tmp-readme/README.md
+                echo "this repository is a backup of the ${{ inputs.source-repository }} repository." >> tmp-readme/README.md
             fi
             cd tmp-readme
             git init
@@ -73,18 +76,15 @@ runs:
         git remote add origin https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
         git branch -M main
         git fetch --all
-        for branch in `git branch -a | grep remotes | grep -v HEAD | grep -v master `; do
-          git branch --track ${branch#remotes/origin/} $branch
-        done
-        if [ `git branch --list sha-${{ inputs.ref }} | grep -v 'remotes'` ] ; then
-            echo "Branch name sha-${{ inputs.ref }} already exists."
+        BRANCH="sha-${{ inputs.ref }}"
+        echo "BRANCH: $BRANCH"
+        if [[ $(git branch -r --contains "origin/$BRANCH" 2>/dev/null) ]]; then
+            echo "Branch name $BRANCH already exists!"
             exit 1
         fi
-        git checkout -b sha-${{ inputs.ref }}
+        git checkout -b $BRANCH
         git add -A
         git commit -am "SHA: ${{ inputs.ref }}"
-        git push -u origin sha-${{ inputs.ref }}
+        git push -u origin $BRANCH
         exit 0
       shell: bash
-      env:
-        REF: ${{ inputs.ref }}
