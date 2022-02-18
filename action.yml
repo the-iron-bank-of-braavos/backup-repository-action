@@ -42,9 +42,9 @@ runs:
         function createRepo {
                     
             if [ $1 == "user" ]; then
-                URL="https://api.github.com/user/repos"
+                URL="https://api.github.com/${repo[0]}/repos"
             elif [ $i == "org" ]; then
-                URL="https://api.github.com/${repo[1]}/${repo[0]}/repos"
+                URL="https://api.github.com/orgs/${repo[0]}/repos"
             else
                 echo "Owner parameter must be user or org"
                 exit 1
