@@ -55,7 +55,6 @@ runs:
             git add README.md
             git commit -am "Copy README.md"
             git push -u origin main
-        fi
         }
         
         read -a repo <<< "${{ inputs.target-repository }}"
