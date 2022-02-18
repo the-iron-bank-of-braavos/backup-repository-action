@@ -68,13 +68,18 @@ runs:
         IS_USER=$(curl -X GET -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/${repo[0]}")
         
         if [ $IS_ORG == 200 ]; then
-          createRepo orgs
+          #createRepo orgs
+          echo "IS ORGANIZATION"
         elif [ $IS_USER == 200 ]; then
-          createRepo users
+          #createRepo users
+          echo "IS USER"
         else
           echo "No se ha encontrado el usuario ${repo[0]}"
           exit 1
         fi
+        
+        echo "END!"
+        exit 0
            
       shell: bash
     - run: |
