@@ -35,18 +35,22 @@ runs:
         token: ${{ inputs.token }}
         path: tmp-repo
     - run: |
+    
+        IFS='/'
+        read -a repo <<< "${{ inputs.target-repository }}"
+    
         function createRepo {
                     
             if [ $1 == "user" ]; then
                 URL="https://api.github.com/user/repos"
             elif [ $i == "org" ]; then
-                URL="https://api.github.com/${1}/${repo[0]}/repos"
+                URL="https://api.github.com/${repo[1]}/${repo[0]}/repos"
             else
                 echo "Owner parameter must be user or org"
                 exit 1
             fi
             
-            HTTP_CODE=$(curl -X POST -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/${1}/${repo[0]}/repos" -d '{"name": "'"${repo[1]}"'"}')
+            HTTP_CODE=$(curl -X POST -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" $URL -d '{"name": "'"${repo[1]}"'"}')
             echo "HTTP_CODE: $HTTP_CODE"
             
             if [ $HTTP_CODE == 200 ] || [ $HTTP_CODE == 201 ]; then
@@ -71,10 +75,7 @@ runs:
                 echo "Repo created"
             fi
         }
-        
-        IFS='/'
-        read -a repo <<< "${{ inputs.target-repository }}"
-        
+                
         IS_ORG=$(curl -X GET -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/orgs/${repo[0]}")
         IS_USER=$(curl -X GET -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/${repo[0]}")
         
