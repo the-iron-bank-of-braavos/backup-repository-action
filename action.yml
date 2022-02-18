@@ -42,7 +42,7 @@ runs:
         function createRepo {
                     
             if [ $1 == "user" ]; then
-                URL="https://api.github.com/${repo[0]}/repos"
+                URL="https://api.github.com/user/repos"
             elif [ $i == "org" ]; then
                 URL="https://api.github.com/orgs/${repo[0]}/repos"
             else
