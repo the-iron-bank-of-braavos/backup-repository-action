@@ -54,10 +54,10 @@ runs:
             echo "REPO: ${repo[1]}"
             echo "URL $URL"
             
-            curl -X -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "$URL" -d '{"name": "'"${repo[1]}"'"}'
+            curl -X POST -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "$URL" -d '{"name": "'"${repo[1]}"'"}'
             
             #HTTP_CODE=$(curl -X POST -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" $URL -d '{"name": "'"${repo[1]}"'"}')
-            curl -X POST -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" $URL -d '{"name": "'"${repo[1]}"'"}'
+            #curl -X POST -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" $URL -d '{"name": "'"${repo[1]}"'"}'
             exit 0
             echo "HTTP_CODE: $HTTP_CODE"
             
