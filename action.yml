@@ -35,36 +35,39 @@ runs:
         token: ${{ inputs.token }}
         path: tmp-repo
     - run: |
+        read -a repo <<< "${{ inputs.target-repository }}"
+        
         IFS='/'
         
         function createRepo {
-            mkdir -p tmp-readme
-            if test -f "tmp-repo/README.md"; then
-                cp tmp-repo/README.md tmp-readme/
-            else
-                echo "# ${{ inputs.target-repository }}" >> tmp-readme/README.md
-                echo "this repository is a backup of the ${{ inputs.source-repository }} repository." >> tmp-readme/README.md
+        
+            HTTP_CODE=$(curl -X POST -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/orgs/${repo[0]}/repos" -d '{"name": "'"${repo[1]}"'"}')
+            echo "HTTP_CODE: $HTTP_CODE"
+            
+            if [ $HTTP_CODE == 200 ] || [ $HTTP_CODE == 201 ]; then
+                mkdir -p tmp-readme
+                if test -f "tmp-repo/README.md"; then
+                    cp tmp-repo/README.md tmp-readme/
+                else
+                    echo "# ${{ inputs.target-repository }}" >> tmp-readme/README.md
+                    echo "this repository is a backup of the ${{ inputs.source-repository }} repository." >> tmp-readme/README.md
+                fi
+                cd tmp-readme
+                git init
+                git config user.name "GitHub Actions Bot"
+                git config user.email "<actions@github.com>"
+                git remote add origin https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
+                git branch -M main
+                git fetch --all
+                git add README.md
+                git commit -am "Copy README.md"
+                git push -u origin main
             fi
-            cd tmp-readme
-            git init
-            git config user.name "GitHub Actions Bot"
-            git config user.email "<actions@github.com>"
-            git remote add origin https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
-            git branch -M main
-            git fetch --all
-            git add README.md
-            git commit -am "Copy README.md"
-            git push -u origin main
         }
         
-        read -a repo <<< "${{ inputs.target-repository }}"
-        HTTPD_CODE=$(curl -X POST -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/orgs/${repo[0]}/repos" -d '{"name": "'"${repo[1]}"'"}')
-
-        echo "HTTPD_CODE: $HTTPD_CODE"
-        
-        if [[ $(curl -X POST -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/orgs/${repo[0]}/repos" -d '{"name": "'"${repo[1]}"'"}') -eq 200 ]]; then
+        if [[ $(curl -X POST -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/orgs/${repo[0]}/repos" -d '{"name": "'"${repo[1]}"'"}') == 200 ]]; then
           createRepo
-        elif [[ $(curl -X POST -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/${repo[0]}/repos" -d '{"name": "'"${repo[1]}"'"}') -eq 200 ]]; then
+        elif [[ $(curl -X POST -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/${repo[0]}/repos" -d '{"name": "'"${repo[1]}"'"}') == 200 ]]; then
           createRepo
         else
           echo "No se ha encontrado el usuario ${repo[0]}"
