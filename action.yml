@@ -43,7 +43,7 @@ runs:
                     
             if [ $1 == "user" ]; then
                 URL="https://api.github.com/user/repos"
-            elif [ $i == "org" ]; then
+            elif [ $1 == "org" ]; then
                 URL="https://api.github.com/orgs/${repo[0]}/repos"
             else
                 echo "Owner parameter must be user or org"
