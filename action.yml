@@ -116,6 +116,6 @@ runs:
         git checkout -b $BRANCH
         git add -A
         git commit -am "SHA: ${{ inputs.ref }}"
-        git push -u origin $BRANCH
+        git push -u origin $BRANCH && git push -u origin main
         exit 0
       shell: bash
