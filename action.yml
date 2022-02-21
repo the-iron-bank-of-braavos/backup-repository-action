@@ -70,7 +70,7 @@ runs:
                 git branch -M main
                 git fetch --all
                 git add .
-                git commit -am "Copy README.md"
+                git commit -m "Copy README.md"
                 git push -u origin main
                 echo "Repo created"
             fi
