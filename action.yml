@@ -53,10 +53,7 @@ runs:
             HTTP_CODE=$(curl -X POST -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "$URL" -d '{"name": "'"${repo[1]}"'"}')
             echo "HTTP_CODE: $HTTP_CODE"
             
-            HTTP_RESPONSE=$(curl -X GET -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "$URL" -d '{"name": "'"${repo[1]}"'"}'")
-            echo "HTTP_RESPONSE: $HTTP_RESPONSE"
-            
-            if [ $HTTP_RESPONSE == 200 ] || [ $HTTP_RESPONSE == 201 ]; then
+            if [ $IS_ORG == 200 ] || [ $IS_USER == 200 ]; then
                 echo "Creating repo"
                 mkdir -p tmp-readme
                 if test -f "tmp-repo/README.md"; then
