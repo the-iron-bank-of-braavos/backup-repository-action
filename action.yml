@@ -50,10 +50,10 @@ runs:
                 exit 1
             fi
 
-            HTTP_CODE=$(curl -X POST -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "$URL" -d '{"name": "'"${repo[1]}"'"}')
+            HTTP_CODE=$(curl -X POST -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "$URL" -d '{"name": "'"${repo[1]}"'"}')
             echo "HTTP_CODE: $HTTP_CODE"
             
-            if [ $IS_ORG == 200 ] || [ $IS_USER == 200 ]; then
+            if [ $HTTP_CODE == 200 ] || [ $HTTP_CODE == 201 ]; then
                 echo "Creating repo"
                 mkdir -p tmp-readme
                 if test -f "tmp-repo/README.md"; then
