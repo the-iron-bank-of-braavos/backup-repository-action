@@ -63,13 +63,13 @@ runs:
                     echo "this repository is a backup of the ${{ inputs.source-repository }} repository." >> tmp-readme/README.md
                 fi
                 cd tmp-readme
-                ls -l
                 git init
                 git config user.name "GitHub Actions Bot"
                 git config user.email "<actions@github.com>"
                 git remote add origin https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
                 git branch -M main
                 git fetch --all
+                ls -l
                 git add -A
                 git commit -m "Copy README.md"
                 git push -u origin main
