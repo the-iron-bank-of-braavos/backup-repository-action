@@ -1,20 +1,45 @@
-name: Repository backup
+name: Repository backup test workflow
 
 on:
-  push:
-    branches:
-      - 'test-if'
+  workflow_dispatch:
+    inputs:
+      token:
+        type: text
+        required: true
+        description: "Token with write access in the target repository"
+      source-repo:
+        type: text
+        required: true
+        description: "The sourcecode repository identified by organization/repository to retrieve the commit from"
+        default: "actions/checkout"
+      ref:
+        type: text
+        required: true
+        description: "The commit to retrieve from the source repository"
+        default: "ec3a7ce113134d7a93b817d10a8272cb61118579"
+      target-repo:
+        type: text
+        required: true
+        description: "The target repository identified by organization/repository to store the sourcecode repository commit"
 
 jobs:
   backup-repository:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+    
+      - name: Mask the input token
+        run: |
+          maskedtoken=$(cat $GITHUB_EVENT_PATH | jq '.inputs.token' | sed 's/"//g' )
+          echo ::add-mask::$maskedtoken
+
+      - name: Checkout this action
+        uses: actions/checkout@v2
+
       - name: Backup repository
         uses: ./
         with:
-          token: ${{ secrets.USER_PAT }}
-          source-repository: the-iron-bank-of-braavos/test-octokit
-          target-repository: the-iron-bank-of-braavos/test-octokit-backup
+          token: ${{ github.event.inputs.token }}
+          source-repository: ${{ github.event.inputs.source-repo }}
+          target-repository: ${{ github.event.inputs.target-repo }}
           topics: 'backup, test, sha'
-          ref: 56984d1854b126dc00edbf5b477c18f9d94a91cb
+          ref: ${{ github.event.inputs.ref }}
