@@ -1,8 +1,10 @@
 # Backup Repository Action
 
-_Description_: Action which use consists in 
-making a copy of any existing GitHub Action 
-and create a new repository for its internal usage
+This is an action to perform a backup of any existing GitHub repository, creating a new repository for internal usage. In order to prevent that the action outside of the current organization could be erased or be out of reach for any reason.
+
+After checking that the source repository exists it will perform a backup based on SHA reference, a copy of existing README, or add a new one in case of the repository hasn't any README, assign selected topics, and finally create a new repository defined in target repository input with a branch named after SHA reference.
+
+In case of the user tries to make a backup of an already existing SHA reference in the same repository it will result in a failed execution.
 
 ## Table of content
 
@@ -12,16 +14,17 @@ and create a new repository for its internal usage
 
 ## Inputs
 
-| Input                    | Required  | Default  | Description                                                                                                             |
-|--------------------------|-----------|----------|-------------------------------------------------------------------------------------------------------------------------|
-| `token`                  | **true**  |          | Personal access token used to fetch the repository. This field is optional, required if app credentials are not defined.|
-| `source-repository`      | **true**  |          | Repository from where action will be retrieved to perform a copy.                                                       |
-| `target-repository-name` | **true**  |          | New repository for upload copied source repository.                                                                     |
-| `topics`                 | **false** | `backup` | Tags for repository management.                                                                                         |
+| Input                    | Required  | Default              | Description                                                                                                           |
+|--------------------------|-----------|----------------------|-----------------------------------------------------------------------------------------------------------------------|
+| `token`                  | **false** | `${{ github.token }}`| Personal access token used to manage this action. This field is optional, required if app credentials are not defined.|
+| `source-repository`      | **true**  |                      | Repository from where action will be retrieved to perform a backup.                                                          |
+| `ref`                    | **true**  |                      | Target commit SHA from action exact reference.                                                                               |
+| `target-repository-name` | **true**  |                      | New repository for upload copied source repository.                                                                          |
+| `topics`                 | **false** | `backup`             | Topics for repository management.                                                                                     |
 
 ## Usage
 
-This action has to be used in this way.
+Action has to be used in this way.
 
 ```yaml
    backup-repository:
@@ -33,6 +36,7 @@ This action has to be used in this way.
          with:
            token: <token>
            source-repository: <source-repository>
+           ref: <ref>
            target-repository-name: <target-repository-name>
            topics: <topics>
 ```          
