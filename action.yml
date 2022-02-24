@@ -34,40 +34,72 @@ runs:
         ref: ${{ inputs.ref }}
         token: ${{ inputs.token }}
         path: tmp-repo
-    - run: |
+    - name: Creating repository
+      run: |    
         IFS='/'
         read -a repo <<< "${{ inputs.target-repository }}"
-        HTTPD_CODE=$(curl -X POST -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/orgs/${repo[0]}/repos" -d '{"name": "'"${repo[1]}"'"}')
-
-        echo "HTTPD_CODE: $HTTPD_CODE"
-         
-        if [ $HTTPD_CODE == 200 ] || [ $HTTPD_CODE == 201 ]; then
-            mkdir -p tmp-readme
-            if test -f "tmp-repo/README.md"; then
-                cp tmp-repo/README.md tmp-readme/
+    
+        function createRepo {
+                    
+            if [ $1 == "user" ]; then
+                URL="https://api.github.com/user/repos"
+            elif [ $1 == "org" ]; then
+                URL="https://api.github.com/orgs/${repo[0]}/repos"
             else
-                echo "# ${{ inputs.target-repository }}" >> tmp-readme/README.md
-                echo "this repository is a backup of the ${{ inputs.source-repository }} repository." >> tmp-readme/README.md
+                echo "Owner parameter must be user or org"
+                exit 1
             fi
-            cd tmp-readme
-            git init
-            git config user.name "GitHub Actions Bot"
-            git config user.email "<actions@github.com>"
-            git remote add origin https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
-            git branch -M main
-            git fetch --all
-            git add README.md
-            git commit -am "Copy README.md"
-            git push -u origin main
-        fi
+
+            HTTP_CODE=$(curl -X POST -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "$URL" -d '{"name": "'"${repo[1]}"'"}')
+            echo "HTTP_CODE: $HTTP_CODE"
+            
+            if [ $HTTP_CODE == 200 ] || [ $HTTP_CODE == 201 ]; then
+                echo "Creating repo"
+                mkdir -p tmp-readme
+                if test -f "tmp-repo/README.md"; then
+                    cp tmp-repo/README.md tmp-readme/
+                else
+                    echo "# ${{ inputs.target-repository }}" >> tmp-readme/README.md
+                    echo "this repository is a backup of the ${{ inputs.source-repository }} repository." >> tmp-readme/README.md
+                fi
+                cd tmp-readme
+                git init
+                git config user.name "GitHub Actions Bot"
+                git config user.email "<actions@github.com>"
+                git remote add origin https://${{ inputs.token }}@github.com/${{ inputs.target-repository }}.git
+                git branch -M main
+                git fetch --all
+                ls -l
+                git add -A
+                git commit -m "Copy README.md"
+                git push -u origin main
+                echo "Repo created"
+            fi
+        }
+                
+        IS_ORG=$(curl -X GET -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/orgs/${repo[0]}")
+        IS_USER=$(curl -X GET -o /dev/null -s -w "%{http_code}\n" -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/users/${repo[0]}")
+        
+        if [ $IS_ORG == 200 ]; then
+          echo "IS ORGANIZATION"
+          createRepo org
+        elif [ $IS_USER == 200 ]; then
+          echo "IS USER"
+          createRepo user
+        else
+          echo "No se ha encontrado el usuario ${repo[0]}"
+          exit 1
+        fi        
       shell: bash
-    - run: |
+    - name: Adding topics
+      run: |
         t=$( echo "${{ inputs.topics }}" | tr -d ' ')
         if [ ! -z "$t" ]; then
           curl -X PUT -H "Authorization: token ${{ inputs.token }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${{ inputs.target-repository }}/topics -d '{"names": ['"$(printf '"%s"\n' "${t//,/\",\"}")"']}'
         fi
       shell: bash
-    - run: |
+    - name: Repository backup
+      run: |
         cd tmp-repo/
         rm -rf .git
         git init

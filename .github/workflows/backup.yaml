@@ -3,7 +3,7 @@ name: Repository backup
 on:
   push:
     branches:
-      - 'main'
+      - 'test-if'
 
 jobs:
   backup-repository:
@@ -17,4 +17,4 @@ jobs:
           source-repository: the-iron-bank-of-braavos/test-octokit
           target-repository: the-iron-bank-of-braavos/test-octokit-backup
           topics: 'backup, test, sha'
-          ref: 300080b7d0d231307a6c8c037ddbca3694b74cb2
+          ref: 56984d1854b126dc00edbf5b477c18f9d94a91cb
